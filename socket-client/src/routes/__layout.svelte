@@ -3,8 +3,10 @@
 	const TITLE = 'WEBSOCKET-CHAT-TEST';
 </script>
 
-<div class="w-full overflow-hidden flex flex-col m-2 items-center justify-center">
-	<h1 class="text-[100px] font-nunito">{TITLE}</h1>
+<div class="w-screen h-screen overflow-hidden flex flex-col">
+	<h1 class="text-[100px] text-center font-nunito">{TITLE}</h1>
 
-	<slot />
+	<div class="flex flex-col items-center justify-center w-full">
+		<slot />
+	</div>
 </div>

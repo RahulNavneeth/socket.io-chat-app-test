@@ -33,7 +33,14 @@
 		$messsages = [...$messsages, data];
 	});
 
+	let disabled = true;
 	let MESSAGE: string = '';
+
+	$: if (!!MESSAGE) {
+		disabled = false;
+	} else {
+		disabled = true;
+	}
 
 	const onSubmit = () => {
 		socket.emit('message', { message: MESSAGE, room: room, name });
@@ -42,15 +49,19 @@
 </script>
 
 <h1 class="text-[50px] font-nunito">WELCOME TO - {room}, {name}</h1>
-<form class="flex flex-row w-full items-center justify-center" on:submit|preventDefault={onSubmit}>
+<form class="flex flex-col w-1/2 items-right justify-center" on:submit|preventDefault={onSubmit}>
 	<input
 		bind:value={MESSAGE}
-		class="border-2 font-nunito border-black w-1/2 rounded-lg p-2"
+		class="border-2 font-nunito font-bold mr-2 border-black w-full rounded-lg p-2"
 		type="text"
 		placeholder="Message"
 	/>
 
-	<button class="border-2 border-black p-2 font-nunito rounded-lg">SEND</button>
+	<button
+		{disabled}
+		class="bg-purple-500 disabled:bg-purple-300 hover:bg-purple-600 mt-2 px-2 font-bold transition-all p-2 font-nunito rounded-lg"
+		>SEND</button
+	>
 </form>
 
 <div class="flex flex-col my-4 h-fit items-center  w-1/2 justify-center">
@@ -63,14 +74,14 @@
 			>
 				<div class="w-fit">
 					<div
-						class="w-full flex font-nunito {message.name !== name
+						class="w-full flex font-nunito font-bold {message.name !== name
 							? 'text-left'
 							: 'text-right'} flex-col"
 					>
 						{message.name === name ? 'You' : message.name}
 					</div>
 					<div
-						class="w-fit font-nunito {message.name === name
+						class="w-fit font-nunito font-bold {message.name === name
 							? ' bg-blue-500 font-bold rounded-lg p-2'
 							: `bg-emerald-500 font-bold rounded-lg p-2`}"
 					>
@@ -84,6 +95,6 @@
 			</div>
 		{/if}
 	{:else}
-		No messages yet :(
+		<div class="font-nunito font-bold">No messages yet :(</div>
 	{/each}
 </div>

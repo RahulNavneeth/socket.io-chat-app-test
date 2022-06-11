@@ -5,24 +5,36 @@
 
 	let ROOM = '';
 
+	let disabled = true;
+
+	$: if (!!ROOM && !!$NAME) {
+		disabled = false;
+	} else {
+		disabled = true;
+	}
+
 	const onsubmit = () => {
 		goto(`/${ROOM}`);
 	};
 </script>
 
-<form class="flex flex-col items-center justify-center w-full" on:submit|preventDefault={onsubmit}>
+<form class="flex flex-col items-center justify-center w-1/2" on:submit|preventDefault={onsubmit}>
 	<input
 		bind:value={$NAME}
-		class="border-2 font-nunito border-black w-1/2 rounded-lg p-2"
+		class="border-2 mt-2 font-bold font-nunito border-black w-full rounded-lg p-2"
 		type="text"
-		placeholder="NAME"
+		placeholder="name"
 	/>
 	<input
 		bind:value={ROOM}
-		class="border-2 font-nunito border-black w-1/2 rounded-lg p-2"
+		class="border-2 mt-2 font-bold font-nunito border-black w-full rounded-lg p-2"
 		type="text"
-		placeholder="ROOMNAME"
+		placeholder="room"
 	/>
 
-	<button class="border-2 border-black p-2 font-nunito rounded-lg">SEND</button>
+	<button
+		{disabled}
+		class="bg-purple-500 disabled:bg-purple-300 hover:bg-purple-600 mt-2 px-2 w-full font-bold transition-all p-2 font-nunito rounded-lg"
+		>JOIN</button
+	>
 </form>
