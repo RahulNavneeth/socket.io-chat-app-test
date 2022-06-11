@@ -1,5 +1,5 @@
 <script context="module">
-	import { NAME } from '../store/name';
+	import { NAME } from '../../store/name';
 
 	export const load = async () => {
 		if (get(NAME).length) {
@@ -18,7 +18,7 @@
 </script>
 
 <script lang="ts">
-	import { messsages } from '../store/message';
+	import { messsages } from '../../store/message';
 	import io from 'socket.io-client';
 	import { get } from 'svelte/store';
 	import { page } from '$app/stores';

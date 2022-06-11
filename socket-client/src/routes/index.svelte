@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import { NAME } from './store/name';
+	import { NAME } from '../store/name';
 
 	let ROOM = '';
 
