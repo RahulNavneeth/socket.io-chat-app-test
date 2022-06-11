@@ -22,12 +22,21 @@
 	import io from 'socket.io-client';
 	import { get } from 'svelte/store';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 
 	const { room } = $page.params;
 
 	export let name: string = '';
 
 	const socket = io('http://localhost:3001');
+
+	onMount(() => {
+		socket.emit('join', { room, name });
+	});
+
+	socket.on(`join-${room}`, (data) => {
+		$messsages = [...$messsages, data];
+	});
 
 	socket.on(`message-${$page.params.room}`, (data) => {
 		$messsages = [...$messsages, data];
@@ -83,14 +92,14 @@
 					<div
 						class="w-fit font-nunito font-bold {message.name === name
 							? ' bg-blue-500 font-bold rounded-lg p-2'
-							: `bg-emerald-500 font-bold rounded-lg p-2`}"
+							: `bg-yellow-500 font-bold rounded-lg p-2`}"
 					>
 						{message.message}
 					</div>
 				</div>
 			</div>
-		{:else if message.type === 'join' || message.type === 'disconnected'}
-			<div>
+		{:else if message.type === 'join'}
+			<div class="w-full m-2 text-center font-nunito font-bold p-2 rounded-lg bg-green-500">
 				{message.name} - {message.message}
 			</div>
 		{/if}

@@ -15,6 +15,15 @@ io.on("connection", (socket) => {
       name: data.name,
     });
   });
+
+  socket.on("join", (data) => {
+    io.emit(`join-${data.room}`, {
+      id: socket.id,
+      message: "joined",
+      type: "join",
+      name: data.name,
+    });
+  });
 });
 
 io.listen(3001);
